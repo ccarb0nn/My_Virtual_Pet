@@ -59,6 +59,7 @@ This is a personal project created for fun to help sharpen my programming skills
 - Additional mini-games
 - Expanded gameplay 
 - More interactive pet features 
+- Updated visuals / styling  
 
 ---
 
