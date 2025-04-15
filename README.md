@@ -11,6 +11,8 @@ Once the player has selected their starting pet, the player is then taken to the
 - Pet interaction buttons (feed, play, sleep, catch pet, view pets, rename pet)
 - Player stats displayed in the top-left corner 
 
+---
+
 ### Goal of The Game
 The goal of the game is to keep your pets stats from reaching zero by:
 - Feeding it
