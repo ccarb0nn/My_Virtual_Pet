@@ -2,9 +2,7 @@
     <img src="./otherPhotos/MyVirtualPet_Banner.png" alt ="My Virtual Pet Banner" width="100%">
 </p>
 <h1 align="center">🐾 My Virtual Pet</h1>
-<p align="center"><i>A Tamagotchi-style pet simulation game</i></p>
-
-# My Virtual Pet - Project 
+<p align="center"><i>A Tamagotchi-style pet simulation game</i></p> 
 
 **My Virtual Pet** is a Tamagotchi-style game where the player starts by choosing one of three starter pets. After selecting a pet, the player has the option to name it.
 
