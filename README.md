@@ -83,10 +83,10 @@ This will take you to the home screen where you can start by entering your usern
 
 ## Screenshots 
 Home Page / Pet Interaction Scene 
-![alt text](image-1.png)
+![alt text](./otherPhotos/image-1.png)
 
 View / Select Pets Scene
-![alt text](image-2.png)
+![alt text](./otherPhotos/image-2.png)
 
 Catch A Pet Scene
-![alt text](image.png)
+![alt text](./otherPhotos/image.png)
