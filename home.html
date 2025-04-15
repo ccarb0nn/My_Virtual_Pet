@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tamagotchi Game</title>
+    <link rel="stylesheet" href="./styling/style.css">
+</head>
+<body>
+    <div id="playerStats">
+        <h1 id="player-name">Your Name</h1>
+        <p id="food">Food : 0 </p>
+        <p id="player-level">Level : 1 </p>
+        <p id="player-xp">XP : 0 </p>
+    </div>
+    <div class="pet">
+        <h1>My Virtual Pet</h1>
+        <div id="pet-display">
+            <img id="pet-image" src="./petPhotos/Dog-Pet.png" alt="Your Pet">
+        </div>
+        <div id="stats">
+            <h1 id="pet-name">Your Pet</h1>  
+            <p id="hunger">Hunger: 100</p>
+            <p id="happiness">Happiness: 100</p>
+            <p id="energy">Energy: 100</p>
+        </div>
+        <div id="controls">
+            <button onclick="myPet.feed()">Feed</button>
+            <button onclick="selectGame()">Play</button>
+            <button onclick="myPet.sleep()">Sleep</button>
+        </div>
+        <div id="controls">
+            <a href="catchPet.html">
+                <button>Catch Pet</button>
+            </a>
+            <a href="viewPets.html">
+                <button>View Pets</button>
+            </a>
+            <button onclick="renamePet()">Rename Pet</button>
+        </div>
+        <div id="minigames">
+            <a href="Map/map.html">
+                <button>Explore</button>
+            </a>
+            <button onclick="resetGame()">Reset Game</button>
+        </div>
+    </div>
+    <script type="module" src="app.js"></script>
+    <script type="module" src="pet.js"></script>
+    <script type="module" src="player.js"></script>
+    <script type="module" src="./miniGames/gameSelection.js"></script>
+</body>
+</html>

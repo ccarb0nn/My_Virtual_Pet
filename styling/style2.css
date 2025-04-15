@@ -1,0 +1,104 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+#playerStats {
+    display: flex; /* Align elements in a row */
+    align-items: center; /* Align items vertically in the center */
+    gap: 20px; /* Adds spacing between items */
+    background-color: rgba(0, 0, 0, 0.9); /* Optional: gives a semi-transparent background */
+    color: white; /* Optional: text color */
+    padding: 1px; /* Optional: adds padding */
+    padding-left: 20px; /* Adds extra space on the left side */
+    border-radius: 8px; /* Optional: rounded corners */
+}
+
+#topBar {
+    display: flex; /* Align elements in a row */
+    align-items: center; /* Align items vertically in the center */
+    align-content: center;
+    justify-content: center;
+    gap: 20px; /* Adds spacing between items */
+    background-color: rgba(0, 0, 0, 0.9); /* Optional: gives a semi-transparent background */
+    color: white; /* Optional: text color */
+    padding: 1px; /* Optional: adds padding */
+    padding-left: 20px; /* Adds extra space on the left side */
+    border-radius: 8px; /* Optional: rounded corners */
+}
+
+/* Container for all pets */
+#pet-container {
+    display: flex;                  /* Align pets horizontally */
+    justify-content: center;        /* Center the pets horizontally */
+    gap: 30px;                      /* Space between the pets */
+    margin-top: 20px;                /* Add some space at the top */
+}
+
+/* Each pet container (image + stats) */
+.pet {
+    display: flex;                  /* Stack image and stats vertically */
+    flex-direction: column;         /* Stack them in a column */
+    align-items: center;            /* Center items horizontally */
+    text-align: center;             /* Center the text */
+}
+
+/* Style for images */
+#pet-image {
+    width: 200px;                   /* Set the width for both images */
+    height: auto;                   /* Maintain aspect ratio */
+}
+#pet-image-sad {
+    width: 200px;                   /* Set the width for both images */
+    height: 288px;                   /* Maintain aspect ratio */
+}
+#pet-image-rex {
+    width: 220px;                   /* Set the width for both images */
+    height: 289px;                   /* Maintain aspect ratio */
+}
+#pet-image-rex-lock {
+    width: 185px;                   /* Set the width for both images */
+    height: 300px;                   /* Maintain aspect ratio */
+}
+
+#pet-image-turt-lock {
+    width: 185px;                   /* Set the width for both images */
+    height: 289px;                   /* Maintain aspect ratio */
+}
+
+/* Style for the stats under each image */
+.pet-stats {
+    margin-top: 10px;               /* Add space between image and stats */
+    font-size: 16px;                /* Adjust font size */
+}
+
+/* Styling for individual stats paragraphs */
+.pet-stats p {
+    margin: 5px 0;                  /* Space between stats */
+}
+
+/* Style for the stats under each image */
+.pet-stats-rex {
+    margin-top: 0px;               /* Add space between image and stats */
+    font-size: 16px;                /* Adjust font size */
+}
+
+/* Styling for individual stats paragraphs */
+.pet-stats-rex p {
+    margin: 5px 0;                  /* Space between stats */
+}
+
+/* Button styles */
+button {
+    margin: 5px;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #000000;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+/* Button hover effect */
+button:hover {
+    background-color: #b18ae7;
+}

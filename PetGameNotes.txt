@@ -1,0 +1,76 @@
+Tamagotchi Application/Game 
+
+Animal - Tamagotchi 
+- Health lvl 
+- Mood lvl
+- Hunger lvl
+
+- Name 
+- Gender
+- Description  
+
+
+Functions
+- Feed pet
+- Play with pet 
+- Capture Pet 
+- set name  
+- get name 
+- set gender
+- get gender 
+- set name 
+- get name
+- set description 
+- get description 
+
+OTHER
+- If pets health stats reach 0, 0, 0, then display add for user and give 40food to user after add
+- (catch Pet) Allow for one chance a day to catch a pet, this is because catching a pet also auto unlocks the character if they dont already have it
+
+PLAYER
+- Name
+- Level
+- Collection
+- get collection
+
+
+
+MiniGames ---------------> Try and have the pet as the minigame player model
+- Dodge Ball
+- Hang Man
+- Flappy Bird 
+- Maze Runner (Find as much food as possible before the time runs out (each time they collect a piece of food, it increases their time) 
+
+
+
+PLAy MINI GAME
+- User has only so much time based on pets stats
+- User plays the ball game and tries to collect as much points as possible 
+- These points can later buy items? 
+
+	Catch Pet
+	- This could also be a game that the player has to "compete" or beat the minigame/animal they are trying to catch to successfully catch it
+	- One of the games could be guessing the correct "door" (1 of 3) and if you chose correctly it would result in you catching the pet.
+
+View PEts
+- Show a full html page of all the pets you have collected and have a button below their image and stast that you can click to select them as current pet
+
+FEED
+- make it so the player only has so much food
+- To earn more they must play the mini game to earn food (use the dodge ball game and use the collectables as the food they collect and can later use to feed the pet
+
+
+
+
+
+
+
+
+WORLD
+- Player tries and find the pet that randomly spawns (invisible)
+- They must explore the area and search for the pet (could be in one of the homes, pond, hay barrel, barrel, garden, tree, rock, etc)
+- Player has only a certain amount of time to find the pet before their time is up and the pet flees
+- Chest can be opened to receive 100food.
+- For catching pet just create a small box where when the player is colliding with it and presses enter, they will search the item for the pet
+	- When they press enter to search, what it will do is provide a number (id for each item) and if it matches the random number, then they caught the pet
+	

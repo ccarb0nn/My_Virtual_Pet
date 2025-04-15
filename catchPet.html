@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tamagotchi Game</title>
+    <link rel="stylesheet" href="./styling/style2.css">
+</head>
+<body>
+    <div id="topBar">
+        <h1>Guess Which Door The Pet Hid Behind</h1>
+    </div>
+    <div id="pet-container">
+        <!-- Door 1 -->
+        <div class="pet">
+            <img id="pet-image" src="./otherPhotos/Door1.png" alt="Your Pet">
+            <button onclick="catchPet(1)">DOOR 1</button> <!-- Button to select door 1 -->
+        </div>
+
+        <!-- Door 2 -->
+        <div class="pet">
+            <img id="pet-image" src="./otherPhotos/Door1.png" alt="Your Pet">
+            <button onclick="catchPet(2)">DOOR 2</button> <!-- Button to select door 2 -->
+        </div>
+
+        <!-- Door 3 -->
+        <div class="pet">
+            <img id="pet-image" src="./otherPhotos/Door1.png" alt="Your Pet">
+            <button onclick="catchPet(3)">DOOR 3</button> <!-- Button to select door 3 -->
+        </div>
+    </div>
+    <script type="module" src="catchPet.js"></script>
+</body>
+</html>

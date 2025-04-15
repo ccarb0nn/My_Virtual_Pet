@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tamagotchi Game</title>
+    <link rel="stylesheet" href="./styling/style2.css">
+</head>
+<body>
+    <div id="topBar">
+        <h1>My Virtual Pet</h1>
+    </div>
+    <div>
+        <a href="home.html">
+            <button>Go Back</button>
+        </a>
+    </div>
+    <div>
+        <div id="pet-container">
+            <!-- First Pet -->
+            <div class="pet">
+                <!-- <h2 id="lvl">LVL 1</h2> -->
+                <img id="pet-image" src='./petPhotos/Dog-Pet.png' alt="Your Pet">
+                <div class="pet-stats">
+                    <h1 id="pet-name">CLOUD</h1>
+                    <p id="hunger">Hunger: 100</p>
+                    <p id="happiness">Happiness: 100</p>
+                    <p id="energy">Energy: 100</p>
+                </div>
+                <button onclick="changePet(0)">Select Pet</button> <!-- Button to select this pet -->
+            </div>
+    
+            <!-- Second Pet -->
+            <div class="pet">
+                <!-- <h2 id="lvl">LVL 1</h2> -->
+                <img id="pet-image-sad" src="./petPhotos/Cat-Pet.png" alt="Your Pet">
+                <div class="pet-stats">
+                    <h1 id="pet-name">GARF</h1>
+                    <p id="hunger-sad">Hunger: 100</p>
+                    <p id="happiness-sad">Happiness: 100</p>
+                    <p id="energy-sad">Energy: 100</p>
+                </div>
+                <button onclick="changePet(1)">Select Pet</button> <!-- Button to select this pet -->
+            </div>
+    
+            <!-- Third Pet -->
+            <div class="pet">
+                <!-- <h2 id="lvl">LVL 1</h2> -->
+                <img id="pet-image-sad" src="./petPhotos/Monk-Pet.png" alt="Your Pet">
+                <div class="pet-stats">
+                    <h1 id="pet-name">FUDGE</h1>
+                    <p id="hunger-sad">Hunger: 100</p>
+                    <p id="happiness-sad">Happiness: 100</p>
+                    <p id="energy-sad">Energy: 100</p>
+                </div>
+                <button onclick="changePet(2)">Select Pet</button> <!-- Button to select this pet -->
+            </div>
+        </div>
+    </div>
+    <div>
+        <div id="pet-container">
+            <!-- Forth Pet [LOCKED] --> 
+            <div class="pet">
+                <!-- <h2 id="lvl">LVL 1</h2> -->
+                <img id="pet-image-rex-lock" src='./petPhotos/Rex-Lock-Pet.png' alt="Your Pet">
+                <div class="pet-stats-rex">
+                    <h1 id="pet-name">REX</h1>
+                    <p id="hunger">Hunger: 100</p>
+                    <p id="happiness">Happiness: 100</p>
+                    <p id="energy">Energy: 100</p>
+                </div>
+                <button id="buyRex" onclick="buyPet(3)">Buy: 400🍎</button> <!-- Button to select this pet -->
+            </div>
+
+             <!-- Fith Pet [LOCKED] --> 
+            <div class="pet">
+               <!-- <h2 id="lvl">LVL 1</h2> -->
+                <img id="pet-image-turt-lock" src='./petPhotos/Turt-Lock-Pet.png' alt="Your Pet">
+                <div class="pet-stats">
+                    <h1 id="pet-name">TURT</h1>
+                    <p id="hunger">Hunger: 100</p>
+                    <p id="happiness">Happiness: 100</p>
+                    <p id="energy">Energy: 100</p>
+                </div>
+                <button id="buyTurt" onclick="buyPet(4)">Buy: 250🍎</button> <!-- Button to select this pet -->
+            </div>
+        </div>
+    </div>
+    <script type="module" src="pet.js"></script>
+    <script type="module" src="player.js"></script>
+    <script type="module" src="changePet.js"></script>
+    <script type="module" src="buyPet.js"></script>
+</body>
+</html>

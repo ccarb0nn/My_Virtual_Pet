@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GAME DEMO</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.55.2/phaser.min.js"></script>
+    <link rel="stylesheet" href="gameStyle.css">
+    <style>
+        body { margin: 0; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+    <!-- RULES ARE HERE -->
+    <div id="rules">
+        <h1>DODGE BALL SURVIVAL</h1>
+        <p>🍎 Survive each round by avoiding the red balls while collecting as much food as possible 🍎</p>
+        <p>🎮 Use the arrow keys to move & Press space to boost 🚀</p>
+        <p>👀 Score is shown at bottom left, current level at top right, and time remaining at top left 👀</p>
+    </div>
+    <!-- GAME IS HERE -->
+    <div id="game-container">
+        <button id="start-button">Start Game</button>
+    </div> 
+    <script type="module" src="./dodgeBall.js"></script>
+</body>
+</html>

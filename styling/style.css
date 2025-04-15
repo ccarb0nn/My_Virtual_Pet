@@ -1,0 +1,36 @@
+body {
+    font-family: Arial, sans-serif;
+}
+#playerStats {
+    display: flex; /* Align elements in a row */
+    align-items: center; /* Align items vertically in the center */
+    gap: 20px; /* Adds spacing between items */
+    background-color: rgba(0, 0, 0, 0.9); /* Optional: gives a semi-transparent background */
+    color: white; /* Optional: text color */
+    padding: 1px; /* Optional: adds padding */
+    padding-left: 20px; /* Adds extra space on the left side */
+    border-radius: 8px; /* Optional: rounded corners */
+}
+#pet-display img {
+    width: 200px;
+}
+/* Each pet container (image + stats) */
+.pet {
+    display: flex;                  /* Stack image and stats vertically */
+    flex-direction: column;         /* Stack them in a column */
+    align-items: center;            /* Center items horizontally */
+    text-align: center;             /* Center the text */
+}
+
+button {
+    margin: 5px;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #000000;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #b18ae7;
+}
