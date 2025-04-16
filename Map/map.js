@@ -153,8 +153,25 @@ function create() {
     blockers.create(785, 355, null).setSize(155, 2).setVisible(false);
     blockers.create(807, 330, null).setSize(130, 2).setVisible(false);
     blockers.create(774, 290, null).setSize(65, 3).setVisible(false);
-    // Rocks (large only) 
+    // Rocks (large only) - (left to right && bottom to top)
+    blockers.create(500, 590, null).setSize(5, 2).setVisible(false);
     blockers.create(880, 555, null).setSize(5, 2).setVisible(false);
+    blockers.create(367, 75, null).setSize(5, 2).setVisible(false);
+    // Rocks (medium only) 
+    blockers.create(195, 395, null).setSize(15, 1).setVisible(false);
+    // trees (left to right)
+        // Top left tree
+    blockers.create(355, 160, null).setSize(1, 35).setVisible(false);
+        // Middle left tree
+    blockers.create(465, 360, null).setSize(6, 35).setVisible(false);
+    blockers.create(465, 350, null).setSize(45, 35).setVisible(false);
+    blockers.create(465, 320, null).setSize(35, 15).setVisible(false);
+    blockers.create(465, 310, null).setSize(10, 15).setVisible(false);
+        // Middle riht tree
+    blockers.create(640, 320, null).setSize(1, 45).setVisible(false);
+    blockers.create(640, 320, null).setSize(40, 30).setVisible(false);
+
+    // Add collision between player and blockers^
     this.physics.add.collider(player, blockers);
 }
 

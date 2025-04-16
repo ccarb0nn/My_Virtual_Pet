@@ -74,3 +74,8 @@ WORLD
 - For catching pet just create a small box where when the player is colliding with it and presses enter, they will search the item for the pet
 	- When they press enter to search, what it will do is provide a number (id for each item) and if it matches the random number, then they caught the pet
 	
+
+MAIN SCREEN / HUD
+- Add options to buy new backgrounds for their pet whioch acts like a home
+- Could add smaller things to like a bed, food bowl, etc
+	- this would be a png that sits on top of the background 
