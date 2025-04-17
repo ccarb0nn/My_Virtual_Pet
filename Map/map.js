@@ -27,6 +27,8 @@ document.getElementById("start-button").addEventListener("click", function () {
     const game = new Phaser.Game(config);
 });
 
+// -----------------------------------------------------------------------------------------------------------------------------
+
 // Game configuration
 const config = {
     type: Phaser.AUTO,
@@ -47,6 +49,21 @@ const config = {
 let player;
 let cursors;
 let space;
+let enter;
+let randomItem = 0;
+let enterPressed = false;
+
+// Kep track of items found
+let itemsFound = [];
+let keyFound = false; 
+
+// ------ MAP to TRACK LOCATIONS SEARCHED ------
+const itemSpots = new Map();
+itemSpots.set("bag", false);   // Bag by stone wall
+itemSpots.set("rockA", false); // Rock bottom-L
+itemSpots.set("rockB", false); // Rock bottom-R
+itemSpots.set("bushA", false); // Bush by the stone wall 
+
 
 function preload(){
     // Load your tilemap and tileset image
@@ -108,14 +125,17 @@ function create() {
             break;
     }
     player.setCollideWorldBounds(true); // Keep the player inside the world bounds
-    this.cameras.main.startFollow(player, true, 0.05, 0.05);
+    this.cameras.main.startFollow(player, true, 0.05, 0.05); // Camera follows player
 
     // Enable the keyboard input
     cursors = this.input.keyboard.createCursorKeys();  // Phaser's built-in cursor keys
     space = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+    enter = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
 
     // ----- Map Boarder & Object Collision ------
     spawnBariers(player, this);
+    // Spawn secret locations
+    spawnLocations(player, this);
 }
 
 function update() {
@@ -148,6 +168,15 @@ function update() {
         player.setVelocityY(-150);
     } else if (cursors.down.isDown && space.isDown) {
         player.setVelocityY(150);
+    }
+
+    // Check if player is searching (pressing enter)
+    if(enter.isDown && enterPressed == false){
+        randomItem = getRandomNum(1, 4);
+        enterPressed = true;
+    }
+    else if(enter.isUp){
+        enterPressed = false; 
     }
 }
 
@@ -246,4 +275,71 @@ function spawnBariers(player, scene){
 
     // Add collision between player and blockers^
     scene.physics.add.collider(player, blockers);
+}
+
+// Create locations where the user must search for the items 
+function spawnLocations(player, scene){
+    // ----- SECRET LOCATIONS --> [ Pet, Food, Key ] ------
+    let locations = scene.physics.add.staticGroup();
+    // Locations
+    let bag = locations.create(275, 490, null).setSize(2, 2).setVisible(true);
+    let bushA = locations.create(485, 490, null).setSize(10, 2).setVisible(true);
+    let rockA = locations.create(500, 585, null).setSize(8, 6).setVisible(true);
+    let rockB = locations.create(880, 560, null).setSize(6, 6).setVisible(true);
+
+    // Add overlap detection between PLAYER & SECRET LOCATIONS (Pet hiding spots & FOOD / KEY)
+    scene.physics.add.overlap(player, bag, () => checkObject("bag"), checkInteraction, null, this);
+    scene.physics.add.overlap(player, bushA, () => checkObject("bushA"), checkInteraction, null, this);
+    scene.physics.add.overlap(player, rockA, () => checkObject("rockA"), checkInteraction, null, this);
+    scene.physics.add.overlap(player, rockB, () => checkObject("rockB"), checkInteraction, null, this);
+}
+// Check if user pressed enter when 
+function checkInteraction(){
+    if(enterPressed){
+        enterPressed = false;
+        return true;
+    }
+    return false
+}
+
+function checkObject(loc){
+    // Check if location has already been searched 
+    if(itemSpots.get(loc) == false){
+        // Set location as searched 
+        itemSpots.set(loc, true);
+
+        // Check if item has already been found 
+        if(itemsFound.includes(randomItem)){
+            console.log("ITEM ALREADY FOUND");
+        }
+        // If item has not been found yet than give it to user and mark as found 
+        else{
+            itemsFound.push(randomItem);
+            switch(randomItem){
+                case 1:
+                    alert("YOU FOUND FOOD");
+                    console.log("U FOUND FOOD");
+                    break;
+                case 2:
+                    alert("YOU FOUND THE KEY");
+                    keyFound = true;
+                    console.log("U FOUND A KEY");
+                    break;
+                case 3:
+                    alert("YOU FOUND NOTHING...");
+                    console.log("U FOUND NOTHING");
+                    break;
+                case 4:
+                    alert("YOU FOUND THE PET!");
+                    console.log("U FOUND THE PET");
+                    break;
+            }
+        }
+    }
+    else{
+        console.log("U CHECKED THIS LOCATION ALREADY");
+    }
+}
+function getRandomNum(min, max){
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
