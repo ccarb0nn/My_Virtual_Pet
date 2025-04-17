@@ -47,15 +47,19 @@ const config = {
 };
 
 let player;
+let score = 0;
+let scoreText;
+let timeLeft = 30;
+let timerText;
 let cursors;
 let space;
 let enter;
 let randomItem = 0;
 let enterPressed = false;
-
 // Kep track of items found
 let itemsFound = [];
 let keyFound = false; 
+let chestOpened = false;
 
 // ------ MAP to TRACK LOCATIONS SEARCHED ------
 const itemSpots = new Map();
@@ -64,13 +68,20 @@ itemSpots.set("chest", false);  // Chest
 itemSpots.set("barrel", false); // barrel by cart 
 itemSpots.set("bucket", false); // bucket -> by house1
 itemSpots.set("pot", false);    // Pot -> by house2
+itemSpots.set("wagon", false);  // Wagon 
+itemSpots.set("crow", false);   // Scarecrow  
 itemSpots.set("rockA", false);  // Rock bottom-L
 itemSpots.set("rockB", false);  // Rock bottom-R
-itemSpots.set("bushA", false);  // Bush by the stone wall 
+itemSpots.set("rockC", false);  // Rock L
+itemSpots.set("rockD", false);  // Rock Top-L
+itemSpots.set("bush", false);   // Bush by the stone wall 
 itemSpots.set("water", false);  // Water / Bridge 
 itemSpots.set("house1", false); // House / L
 itemSpots.set("house2", false); // House / M
 itemSpots.set("house3", false); // House / R
+itemSpots.set("tree1", false);  // TREE -> M-L
+itemSpots.set("tree2", false);  // TREE -> R
+itemSpots.set("log", false);  // LOG STACK -> L1
 
 function preload(){
     // Load your tilemap and tileset image
@@ -138,6 +149,21 @@ function create() {
     cursors = this.input.keyboard.createCursorKeys();  // Phaser's built-in cursor keys
     space = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     enter = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
+
+    // ----- [ ON SCREEN TEXT ] -----
+    // Creating the TIMER text at the top left corner of the screen
+    timerText = this.add.text(740, 545, `${timeLeft}s`, {fontSize: '24px', fontStyle: 'bold', fill: '#000'});
+    timerText.setScrollFactor(0);
+    // Starting the COUNTDOWN TIMER (decreases every second)
+    this.enemyTimer = this.time.addEvent({
+        delay: 1000,
+        callback: updateTimer,
+        callbackScope: this,
+        loop: true
+    })
+    // Scorebored for coins collected by player
+    scoreText = this.add.text(30, 545, 'SCORE: 0', {fontSize: '24px', fontStyle: 'bold', fill: '#000'});
+    scoreText.setScrollFactor(0);
 
     // ----- Map Boarder & Object Collision ------
     spawnBariers(player, this);
@@ -289,21 +315,28 @@ function spawnLocations(player, scene){
     // ----- SECRET LOCATIONS --> [ Pet, Food, Key ] ------
     let locations = scene.physics.add.staticGroup();
     // Locations 
-    let bag = locations.create(275, 490, null).setSize(2, 2).setVisible(true);
-    let chest = locations.create(890, 415, null).setSize(6, 6).setVisible(true);
-    let water = locations.create(780, 425, null).setSize(8, 6).setVisible(true);
-    let barrel = locations.create(145, 325, null).setSize(12, 14).setVisible(true);
-    let bucket = locations.create(490, 210, null).setSize(1, 1).setVisible(true);
-    let pot = locations.create(695, 210, null).setSize(1, 1).setVisible(true);
+    let bag = locations.create(275, 490, null).setSize(2, 2).setVisible(false);
+    let chest = locations.create(890, 415, null).setSize(6, 6).setVisible(false);
+    let water = locations.create(780, 425, null).setSize(8, 6).setVisible(false);
+    let barrel = locations.create(145, 325, null).setSize(12, 14).setVisible(false);
+    let bucket = locations.create(490, 210, null).setSize(1, 1).setVisible(false);
+    let pot = locations.create(695, 210, null).setSize(1, 1).setVisible(false);
+    let wagon = locations.create(65, 240, null).setSize(8, 8).setVisible(false);
+    let crow = locations.create(65, 55, null).setSize(8, 25).setVisible(false);
 
-    let house1 = locations.create(455, 165, null).setSize(8, 6).setVisible(true);
-    let house2 = locations.create(645, 165, null).setSize(8, 6).setVisible(true);
-    let house3 = locations.create(835, 165, null).setSize(8, 6).setVisible(true);
+    let house1 = locations.create(455, 165, null).setSize(8, 6).setVisible(false);
+    let house2 = locations.create(645, 165, null).setSize(8, 6).setVisible(false);
+    let house3 = locations.create(835, 165, null).setSize(8, 6).setVisible(false);
 
-    let bushA = locations.create(485, 490, null).setSize(10, 2).setVisible(true);
+    let bush = locations.create(485, 490, null).setSize(10, 2).setVisible(false);
+    let tree1 = locations.create(465, 385, null).setSize(10, 8).setVisible(false);
+    let tree2 = locations.create(910, 255, null).setSize(10, 8).setVisible(false);
+    let log = locations.create(360, 250, null).setSize(25, 8).setVisible(false);
 
-    let rockA = locations.create(500, 585, null).setSize(8, 6).setVisible(true);
-    let rockB = locations.create(880, 560, null).setSize(6, 6).setVisible(true);
+    let rockA = locations.create(500, 585, null).setSize(8, 6).setVisible(false);
+    let rockB = locations.create(880, 560, null).setSize(6, 6).setVisible(false);
+    let rockC = locations.create(195, 398, null).setSize(35, 14).setVisible(false);
+    let rockD = locations.create(370, 80, null).setSize(16, 6).setVisible(false);
 
 
     // Add overlap detection between PLAYER & SECRET LOCATIONS (Pet hiding spots & FOOD / KEY)
@@ -313,12 +346,20 @@ function spawnLocations(player, scene){
     scene.physics.add.overlap(player, barrel, () => checkObject("barrel"), checkInteraction, null, this);
     scene.physics.add.overlap(player, bucket, () => checkObject("bucket"), checkInteraction, null, this);
     scene.physics.add.overlap(player, pot, () => checkObject("pot"), checkInteraction, null, this);
+    scene.physics.add.overlap(player, wagon, () => checkObject("wagon"), checkInteraction, null, this);
+    scene.physics.add.overlap(player, crow, () => checkObject("crow"), checkInteraction, null, this);
     scene.physics.add.overlap(player, house1, () => checkObject("house1"), checkInteraction, null, this);
     scene.physics.add.overlap(player, house2, () => checkObject("house2"), checkInteraction, null, this);
     scene.physics.add.overlap(player, house3, () => checkObject("house3"), checkInteraction, null, this);
-    scene.physics.add.overlap(player, bushA, () => checkObject("bushA"), checkInteraction, null, this);
+    scene.physics.add.overlap(player, bush, () => checkObject("bush"), checkInteraction, null, this);
+    scene.physics.add.overlap(player, tree1, () => checkObject("tree1"), checkInteraction, null, this);
+    scene.physics.add.overlap(player, tree2, () => checkObject("tree2"), checkInteraction, null, this);
+    scene.physics.add.overlap(player, tree2, () => checkObject("tree2"), checkInteraction, null, this);
+    scene.physics.add.overlap(player, log, () => checkObject("log"), checkInteraction, null, this);
     scene.physics.add.overlap(player, rockA, () => checkObject("rockA"), checkInteraction, null, this);
     scene.physics.add.overlap(player, rockB, () => checkObject("rockB"), checkInteraction, null, this);
+    scene.physics.add.overlap(player, rockC, () => checkObject("rockC"), checkInteraction, null, this);
+    scene.physics.add.overlap(player, rockD, () => checkObject("rockD"), checkInteraction, null, this);
 }
 // Check if user pressed enter when 
 function checkInteraction(){
@@ -334,13 +375,20 @@ function checkObject(loc){
     if(itemSpots.get(loc) == false){
 
         // Check if user can acsess the chest (needs key) 
-        if(loc == "chest" && keyFound == true){
+        if(loc == "chest" && keyFound == true && chestOpened == false){
+            chestOpened = true; 
             alert("YOU FOUND A TON OF FOOD!");
             console.log("U FOUND LOTS OF FOOD");
+            score += 150; 
+            scoreText.setText('SCORE: ' + score);
         }
         else if(loc == "chest" && keyFound == false){
             alert("YOU NEED A KEY TO UNLOCK THIS CHEST");
             console.log("U NEED THE KEY");
+        }
+        else if(loc == "chest" && chestOpened == true){
+            alert("YOU ALREADY OPENED THIS CHEST");
+            console.log("CHEST WAS ALREADY OPENED");
         }
         else{
             // Set location as searched 
@@ -357,6 +405,9 @@ function checkObject(loc){
                     case 1:
                         alert("YOU FOUND FOOD");
                         console.log("U FOUND FOOD");
+                        // Update player score 
+                        score += 10;
+                        scoreText.setText('SCORE: ' + score);
                         break;
                     case 2:
                         alert("YOU FOUND THE KEY");
@@ -381,4 +432,16 @@ function checkObject(loc){
 }
 function getRandomNum(min, max){
     return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function updateTimer(){
+    if (timeLeft <= 0){
+        timeLeft = 0;
+        console.log("Timer ended, searching over...");
+        // Initilize the game over logic here (call the function)
+    }
+    else{
+        timeLeft--;
+        timerText.setText(`${timeLeft}s`) // Update text/number
+    }
 }
