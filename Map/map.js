@@ -115,64 +115,7 @@ function create() {
     space = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
     // ----- Map Boarder & Object Collision ------
-    let blockers = this.physics.add.staticGroup();
-    // brick wall (left to right)
-    blockers.create(70, 470, null).setSize(100, 2).setVisible(false); 
-    blockers.create(255, 470, null).setSize(100, 1).setVisible(false); 
-    blockers.create(320, 470, null).setSize(100, 2).setVisible(false); 
-    blockers.create(440, 470, null).setSize(100, 2).setVisible(false); 
-    // garden fence (left to right)
-    blockers.create(60, 140, null).setSize(90, 5).setVisible(false); 
-    blockers.create(180, 140, null).setSize(60, 5).setVisible(false);
-    blockers.create(210, 90, null).setSize(5, 110).setVisible(false);
-    // Houses (left to right)
-        // House 1
-    blockers.create(410, 90, null).setSize(5, 110).setVisible(false);
-    blockers.create(470, 155, null).setSize(110, 5).setVisible(false);
-    blockers.create(530, 90, null).setSize(5, 110).setVisible(false);
-        // House 2
-    blockers.create(605, 90, null).setSize(5, 110).setVisible(false);
-    blockers.create(665, 155, null).setSize(110, 5).setVisible(false);
-    blockers.create(725, 90, null).setSize(5, 110).setVisible(false);
-        // House 3
-    blockers.create(800, 90, null).setSize(5, 110).setVisible(false);
-    blockers.create(880, 155, null).setSize(130, 5).setVisible(false);
-    blockers.create(920, 90, null).setSize(5, 110).setVisible(false);
-    // Water/Ponf 
-        // Bridge bottom
-    blockers.create(730, 480, null).setSize(155, 2).setVisible(false);
-    blockers.create(730, 495, null).setSize(155, 2).setVisible(false);
-    blockers.create(730, 520, null).setSize(150, 1).setVisible(false);
-    blockers.create(658, 515, null).setSize(150, 1).setVisible(false);
-    blockers.create(670, 540, null).setSize(175, 2).setVisible(false);
-        // Bridge top
-    blockers.create(785, 410, null).setSize(155, 2).setVisible(false);
-    blockers.create(785, 380, null).setSize(155, 2).setVisible(false);
-    blockers.create(820, 362, null).setSize(155, 2).setVisible(false);
-    blockers.create(820, 380, null).setSize(155, 2).setVisible(false);
-    blockers.create(785, 355, null).setSize(155, 2).setVisible(false);
-    blockers.create(807, 330, null).setSize(130, 2).setVisible(false);
-    blockers.create(774, 290, null).setSize(65, 3).setVisible(false);
-    // Rocks (large only) - (left to right && bottom to top)
-    blockers.create(500, 590, null).setSize(5, 2).setVisible(false);
-    blockers.create(880, 555, null).setSize(5, 2).setVisible(false);
-    blockers.create(367, 75, null).setSize(5, 2).setVisible(false);
-    // Rocks (medium only) 
-    blockers.create(195, 395, null).setSize(15, 1).setVisible(false);
-    // trees (left to right)
-        // Top left tree
-    blockers.create(355, 160, null).setSize(1, 35).setVisible(false);
-        // Middle left tree
-    blockers.create(465, 360, null).setSize(6, 35).setVisible(false);
-    blockers.create(465, 350, null).setSize(45, 35).setVisible(false);
-    blockers.create(465, 320, null).setSize(35, 15).setVisible(false);
-    blockers.create(465, 310, null).setSize(10, 15).setVisible(false);
-        // Middle riht tree
-    blockers.create(640, 320, null).setSize(1, 45).setVisible(false);
-    blockers.create(640, 320, null).setSize(40, 30).setVisible(false);
-
-    // Add collision between player and blockers^
-    this.physics.add.collider(player, blockers);
+    spawnBariers(player, this);
 }
 
 function update() {
@@ -206,4 +149,101 @@ function update() {
     } else if (cursors.down.isDown && space.isDown) {
         player.setVelocityY(150);
     }
+}
+
+function spawnBariers(player, scene){
+    // ----- Map Boarder & Object Collision ------
+    let blockers = scene.physics.add.staticGroup();
+
+    // STONE WALL (left to right)
+    blockers.create(70, 470, null).setSize(100, 2).setVisible(false); 
+    blockers.create(260, 470, null).setSize(100, 1).setVisible(false); 
+    blockers.create(320, 470, null).setSize(100, 2).setVisible(false); 
+    blockers.create(440, 470, null).setSize(100, 2).setVisible(false); 
+
+    // GARDEN FENCE (left to right)
+    blockers.create(60, 140, null).setSize(90, 5).setVisible(false); 
+    blockers.create(180, 140, null).setSize(60, 5).setVisible(false);
+    blockers.create(210, 90, null).setSize(5, 110).setVisible(false);
+
+    // HOUSES (left to right)
+        // House 1
+    blockers.create(410, 90, null).setSize(5, 110).setVisible(false);
+    blockers.create(470, 155, null).setSize(110, 5).setVisible(false);
+    blockers.create(530, 90, null).setSize(5, 110).setVisible(false);
+        // House 2
+    blockers.create(605, 90, null).setSize(5, 110).setVisible(false);
+    blockers.create(665, 155, null).setSize(110, 5).setVisible(false);
+    blockers.create(725, 90, null).setSize(5, 110).setVisible(false);
+        // House 3
+    blockers.create(800, 90, null).setSize(5, 110).setVisible(false);
+    blockers.create(875, 155, null).setSize(130, 5).setVisible(false);
+    blockers.create(920, 90, null).setSize(5, 110).setVisible(false);
+
+    // WATER / BRIDGE  
+        // Bridge bottom
+    blockers.create(730, 480, null).setSize(155, 2).setVisible(false);
+    blockers.create(730, 495, null).setSize(155, 2).setVisible(false);
+    blockers.create(730, 520, null).setSize(150, 1).setVisible(false);
+    blockers.create(658, 515, null).setSize(150, 1).setVisible(false);
+    blockers.create(670, 540, null).setSize(175, 2).setVisible(false);
+        // Bridge top
+    blockers.create(785, 410, null).setSize(155, 2).setVisible(false);
+    blockers.create(785, 380, null).setSize(155, 2).setVisible(false);
+    blockers.create(820, 362, null).setSize(155, 2).setVisible(false);
+    blockers.create(820, 380, null).setSize(155, 2).setVisible(false);
+    blockers.create(785, 355, null).setSize(155, 2).setVisible(false);
+    blockers.create(807, 330, null).setSize(130, 2).setVisible(false);
+    blockers.create(774, 290, null).setSize(65, 3).setVisible(false);
+
+    // ROCKS 
+        // Large Rocks - (left to right && bottom to top)
+    blockers.create(500, 575, null).setSize(5, 1).setVisible(false);
+    blockers.create(880, 555, null).setSize(5, 2).setVisible(false);
+    blockers.create(367, 75, null).setSize(5, 2).setVisible(false);
+        // Medium Rocks 
+    blockers.create(195, 395, null).setSize(15, 1).setVisible(false);
+
+    // TREES (left to right)
+        // Top left tree
+    blockers.create(355, 160, null).setSize(1, 35).setVisible(false);
+        // Middle left tree
+    blockers.create(465, 360, null).setSize(6, 35).setVisible(false);
+    blockers.create(465, 350, null).setSize(45, 35).setVisible(false);
+    blockers.create(465, 320, null).setSize(35, 15).setVisible(false);
+    blockers.create(465, 310, null).setSize(10, 15).setVisible(false);
+        // Middle riht tree
+    blockers.create(640, 320, null).setSize(1, 45).setVisible(false);
+    blockers.create(640, 320, null).setSize(40, 30).setVisible(false);
+        // Top right tree 
+    blockers.create(910, 220, null).setSize(1, 45).setVisible(false);
+    blockers.create(910, 215, null).setSize(60, 40).setVisible(false);
+
+    // LOGs (left to right)
+    blockers.create(360, 245, null).setSize(16, 4).setVisible(false);
+    blockers.create(553, 175, null).setSize(16, 4).setVisible(false);
+    blockers.create(745, 175, null).setSize(12, 4).setVisible(false);
+
+    // OTHER (left to right)
+        // Barrel 
+    blockers.create(145, 320, null).setSize(10, 1).setVisible(false);
+        // Cart
+    blockers.create(65, 250, null).setSize(60, 1).setVisible(false);
+        // Scare-Crow 
+    blockers.create(65, 40, null).setSize(4, 40).setVisible(false);
+        // Chest 
+    blockers.create(890, 395, null).setSize(10, 2).setVisible(false);
+
+    // MAP WALLS/FENCES 
+        // Left side wall barier 
+    blockers.create(15, 225, null).setSize(1, 800).setVisible(false);
+        // Bottom wall barier 
+    blockers.create(485, 620, null).setSize(900, 1).setVisible(false);
+        // Righ side wall barier 
+    blockers.create(940, 225, null).setSize(1, 800).setVisible(false);
+    // NO NEED FOR -> Top wall barier since the player cant go above the fence and it visually looks fine
+    
+
+    // Add collision between player and blockers^
+    scene.physics.add.collider(player, blockers);
 }
