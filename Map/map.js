@@ -59,11 +59,18 @@ let keyFound = false;
 
 // ------ MAP to TRACK LOCATIONS SEARCHED ------
 const itemSpots = new Map();
-itemSpots.set("bag", false);   // Bag by stone wall
-itemSpots.set("rockA", false); // Rock bottom-L
-itemSpots.set("rockB", false); // Rock bottom-R
-itemSpots.set("bushA", false); // Bush by the stone wall 
-
+itemSpots.set("bag", false);    // Bag by stone wall
+itemSpots.set("chest", false);  // Chest
+itemSpots.set("barrel", false); // barrel by cart 
+itemSpots.set("bucket", false); // bucket -> by house1
+itemSpots.set("pot", false);    // Pot -> by house2
+itemSpots.set("rockA", false);  // Rock bottom-L
+itemSpots.set("rockB", false);  // Rock bottom-R
+itemSpots.set("bushA", false);  // Bush by the stone wall 
+itemSpots.set("water", false);  // Water / Bridge 
+itemSpots.set("house1", false); // House / L
+itemSpots.set("house2", false); // House / M
+itemSpots.set("house3", false); // House / R
 
 function preload(){
     // Load your tilemap and tileset image
@@ -281,14 +288,34 @@ function spawnBariers(player, scene){
 function spawnLocations(player, scene){
     // ----- SECRET LOCATIONS --> [ Pet, Food, Key ] ------
     let locations = scene.physics.add.staticGroup();
-    // Locations
+    // Locations 
     let bag = locations.create(275, 490, null).setSize(2, 2).setVisible(true);
+    let chest = locations.create(890, 415, null).setSize(6, 6).setVisible(true);
+    let water = locations.create(780, 425, null).setSize(8, 6).setVisible(true);
+    let barrel = locations.create(145, 325, null).setSize(12, 14).setVisible(true);
+    let bucket = locations.create(490, 210, null).setSize(1, 1).setVisible(true);
+    let pot = locations.create(695, 210, null).setSize(1, 1).setVisible(true);
+
+    let house1 = locations.create(455, 165, null).setSize(8, 6).setVisible(true);
+    let house2 = locations.create(645, 165, null).setSize(8, 6).setVisible(true);
+    let house3 = locations.create(835, 165, null).setSize(8, 6).setVisible(true);
+
     let bushA = locations.create(485, 490, null).setSize(10, 2).setVisible(true);
+
     let rockA = locations.create(500, 585, null).setSize(8, 6).setVisible(true);
     let rockB = locations.create(880, 560, null).setSize(6, 6).setVisible(true);
 
+
     // Add overlap detection between PLAYER & SECRET LOCATIONS (Pet hiding spots & FOOD / KEY)
     scene.physics.add.overlap(player, bag, () => checkObject("bag"), checkInteraction, null, this);
+    scene.physics.add.overlap(player, chest, () => checkObject("chest"), checkInteraction, null, this);
+    scene.physics.add.overlap(player, water, () => checkObject("water"), checkInteraction, null, this);
+    scene.physics.add.overlap(player, barrel, () => checkObject("barrel"), checkInteraction, null, this);
+    scene.physics.add.overlap(player, bucket, () => checkObject("bucket"), checkInteraction, null, this);
+    scene.physics.add.overlap(player, pot, () => checkObject("pot"), checkInteraction, null, this);
+    scene.physics.add.overlap(player, house1, () => checkObject("house1"), checkInteraction, null, this);
+    scene.physics.add.overlap(player, house2, () => checkObject("house2"), checkInteraction, null, this);
+    scene.physics.add.overlap(player, house3, () => checkObject("house3"), checkInteraction, null, this);
     scene.physics.add.overlap(player, bushA, () => checkObject("bushA"), checkInteraction, null, this);
     scene.physics.add.overlap(player, rockA, () => checkObject("rockA"), checkInteraction, null, this);
     scene.physics.add.overlap(player, rockB, () => checkObject("rockB"), checkInteraction, null, this);
@@ -305,34 +332,46 @@ function checkInteraction(){
 function checkObject(loc){
     // Check if location has already been searched 
     if(itemSpots.get(loc) == false){
-        // Set location as searched 
-        itemSpots.set(loc, true);
 
-        // Check if item has already been found 
-        if(itemsFound.includes(randomItem)){
-            console.log("ITEM ALREADY FOUND");
+        // Check if user can acsess the chest (needs key) 
+        if(loc == "chest" && keyFound == true){
+            alert("YOU FOUND A TON OF FOOD!");
+            console.log("U FOUND LOTS OF FOOD");
         }
-        // If item has not been found yet than give it to user and mark as found 
+        else if(loc == "chest" && keyFound == false){
+            alert("YOU NEED A KEY TO UNLOCK THIS CHEST");
+            console.log("U NEED THE KEY");
+        }
         else{
-            itemsFound.push(randomItem);
-            switch(randomItem){
-                case 1:
-                    alert("YOU FOUND FOOD");
-                    console.log("U FOUND FOOD");
-                    break;
-                case 2:
-                    alert("YOU FOUND THE KEY");
-                    keyFound = true;
-                    console.log("U FOUND A KEY");
-                    break;
-                case 3:
-                    alert("YOU FOUND NOTHING...");
-                    console.log("U FOUND NOTHING");
-                    break;
-                case 4:
-                    alert("YOU FOUND THE PET!");
-                    console.log("U FOUND THE PET");
-                    break;
+            // Set location as searched 
+            itemSpots.set(loc, true);
+
+            // Check if item has already been found 
+            if(itemsFound.includes(randomItem)){       // ** Change this so it only checks for key and pet (this way user can still collect food and other items)
+                console.log("ITEM ALREADY FOUND");
+            }
+            // If item has not been found yet than give it to user and mark as found 
+            else{
+                itemsFound.push(randomItem);
+                switch(randomItem){
+                    case 1:
+                        alert("YOU FOUND FOOD");
+                        console.log("U FOUND FOOD");
+                        break;
+                    case 2:
+                        alert("YOU FOUND THE KEY");
+                        keyFound = true;
+                        console.log("U FOUND A KEY");
+                        break;
+                    case 3:
+                        alert("YOU FOUND NOTHING...");
+                        console.log("U FOUND NOTHING");
+                        break;
+                    case 4:
+                        alert("YOU FOUND THE PET!");
+                        console.log("U FOUND THE PET");
+                        break;
+                }
             }
         }
     }
