@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
 window.addEventListener("pageshow", () => {
     if (localStorage.getItem("petCaught") === "true") {
         catchPet();
+        localStorage.setItem("dailyCatch", "true"); // Update so it sets resets dailyCatch to false if new day
         localStorage.removeItem("petCaught");
     }
 });
@@ -118,6 +119,7 @@ function resetGame() {
     localStorage.removeItem('energy');
     localStorage.removeItem('firstLogin');
     localStorage.setItem('firstLogin', "true");
+    localStorage.setItem("dailyCatch", "false");
 
     // PETS BOUGHT RESET
     localStorage.setItem("rexPhoto", "./petPhotos/Rex-Lock-Pet.png");

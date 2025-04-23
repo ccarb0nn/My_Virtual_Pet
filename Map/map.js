@@ -15,8 +15,18 @@ const mood = localStorage.getItem('mood');
 const energy = localStorage.getItem('energy');
 
 // ---------------[ Alert Player When Page Loads With Message ] ----------------------|
-document.addEventListener("DOMContentLoaded", function () {
-    alert("(GOAL: Get Food For Your Pet & Level Up!)");
+
+// Check if player has already tried to catch a pet for the day 
+document.addEventListener("DOMContentLoaded", () => {
+    if (localStorage.getItem("dailyCatch") === "true") {
+        alert("YOU HAVE ALREADY TRIED TO CATCH THE PET TODAY, try again later...");
+         // Redirect to home.html
+        console.log("Redirecting to home.html...");
+        window.location.href = "../home.html";
+    }
+    else{
+        alert("(GOAL: Get Food For Your Pet & Level Up!)");
+    }
 });
 
 // START the GAME when the start BUTTON is CLICKED
