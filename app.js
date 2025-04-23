@@ -9,6 +9,13 @@ document.addEventListener("DOMContentLoaded", function () {
     startGame();
 });
 
+window.addEventListener("pageshow", () => {
+    if (localStorage.getItem("petCaught") === "true") {
+        catchPet();
+        localStorage.removeItem("petCaught");
+    }
+});
+
 function startGame() {
     // Player
     let storedPlayerName = localStorage.getItem('playerName');

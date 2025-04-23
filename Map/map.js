@@ -1,8 +1,9 @@
 import Player from '../../player.js';
+import { catchPet } from '../catchPet.js';
 // ---------------[ Gather USER/PET Info ] ----------------------|
 // Player
 const playerName = localStorage.getItem('playerName'); 
-const allFood = localStorage.getItem('allFood');
+let allFood = localStorage.getItem('allFood');
 let xp = localStorage.getItem('xp');
 let lvl = localStorage.getItem('lvl');
 xp = parseInt(xp);
@@ -60,6 +61,7 @@ let enterPressed = false;
 let itemsFound = [];
 let keyFound = false; 
 let chestOpened = false;
+let petFound = false;
 
 // ------ MAP to TRACK LOCATIONS SEARCHED ------
 const itemSpots = new Map();
@@ -205,7 +207,7 @@ function update() {
 
     // Check if player is searching (pressing enter)
     if(enter.isDown && enterPressed == false){
-        randomItem = getRandomNum(1, 4);
+        randomItem = getRandomNum(1, 4); // generate the random item 
         enterPressed = true;
     }
     else if(enter.isUp){
@@ -377,9 +379,9 @@ function checkObject(loc){
         // Check if user can acsess the chest (needs key) 
         if(loc == "chest" && keyFound == true && chestOpened == false){
             chestOpened = true; 
-            alert("YOU FOUND A TON OF FOOD!");
-            console.log("U FOUND LOTS OF FOOD");
-            score += 150; 
+            alert("YOU FOUND TONS OF FOOD!");
+            console.log("U FOUND TONS OF FOOD");
+            score += 150; // Add this to users account
             scoreText.setText('SCORE: ' + score);
         }
         else if(loc == "chest" && keyFound == false){
@@ -391,41 +393,26 @@ function checkObject(loc){
             console.log("CHEST WAS ALREADY OPENED");
         }
         else{
-            // Set location as searched 
+            // Set Secret-Location as SEARCHED 
             itemSpots.set(loc, true);
-
-            // Check if item has already been found 
-            if(itemsFound.includes(randomItem)){       // ** Change this so it only checks for key and pet (this way user can still collect food and other items)
-                console.log("ITEM ALREADY FOUND");
+            // Generate the random Item (check if item is a one time collectable)
+            if( itemsFound.includes(4) && itemsFound.includes(3)){
+                randomItem = getRandomNum(1, 2);
             }
-            // If item has not been found yet than give it to user and mark as found 
-            else{
-                itemsFound.push(randomItem);
-                switch(randomItem){
-                    case 1:
-                        alert("YOU FOUND FOOD");
-                        console.log("U FOUND FOOD");
-                        // Update player score 
-                        score += 10;
-                        scoreText.setText('SCORE: ' + score);
-                        break;
-                    case 2:
-                        alert("YOU FOUND THE KEY");
-                        keyFound = true;
-                        console.log("U FOUND A KEY");
-                        break;
-                    case 3:
-                        alert("YOU FOUND NOTHING...");
-                        console.log("U FOUND NOTHING");
-                        break;
-                    case 4:
-                        alert("YOU FOUND THE PET!");
-                        console.log("U FOUND THE PET");
-                        break;
+            else if(itemsFound.includes(4)){
+                randomItem = getRandomNum(1, 3);
+                console.log("ITEM ALREADY FOUND, generated new item: ", randomItem);
+            }
+            else if(itemsFound.includes(3)){
+                while(randomItem == 3){
+                    randomItem = getRandomNum(1, 4);
                 }
             }
+            // Generate the random item for the location
+            getItem(randomItem)
         }
     }
+    // User has already searched this Secret-Location 
     else{
         console.log("U CHECKED THIS LOCATION ALREADY");
     }
@@ -434,14 +421,70 @@ function getRandomNum(min, max){
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+// Add XP as a item that can be obtained
+function getItem(randomItem){
+    // Give Item to user and mark as found 
+    itemsFound.push(randomItem);
+        switch(randomItem){
+            case 1:
+                alert("YOU FOUND FOOD");
+                console.log("U FOUND FOOD");
+                // Update player score 
+                score += 10;
+                scoreText.setText('SCORE: ' + score);
+                break;
+            case 2:
+                alert("YOU FOUND NOTHING...");
+                console.log("U FOUND NOTHING");
+                break;
+            case 3:
+                alert("YOU FOUND THE KEY");
+                keyFound = true;
+                console.log("U FOUND A KEY");
+                break;
+            case 4:
+                alert("YOU FOUND THE PET!");
+                petFound = true;
+                console.log("U FOUND THE PET");
+                break;
+        }
+}
+
 function updateTimer(){
     if (timeLeft <= 0){
         timeLeft = 0;
         console.log("Timer ended, searching over...");
-        // Initilize the game over logic here (call the function)
+        gameOver();
     }
     else{
         timeLeft--;
         timerText.setText(`${timeLeft}s`) // Update text/number
     }
+}
+
+function gameOver(){
+    // Storing player/pet info 
+    localStorage.setItem('playerName', playerName);
+    allFood = parseInt(allFood); 
+    allFood += score;
+    localStorage.setItem('allFood', allFood);
+    localStorage.setItem('xp', xp);
+    localStorage.setItem('lvl', lvl);
+
+    localStorage.setItem('selectedPet', JSON.stringify(storedPet));
+    localStorage.setItem('hunger', hunger);
+    localStorage.setItem('mood', 100);
+    localStorage.setItem('energy', energy);
+
+    if(petFound){
+        localStorage.setItem('petCaught', 'true');
+    }
+    else{
+        alert("Oh no! The pet fled before you could find it!");  // Pet fled, notify the user
+    }
+
+    
+    // Redirect to home.html
+    console.log("Redirecting to home.html...");
+    window.location.href = "../home.html";
 }
